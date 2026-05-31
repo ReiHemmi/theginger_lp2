@@ -1,0 +1,965 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>身体の芯から、静かにあたたまる。— THE GINGER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #FFFFFF;
+      --bg-warm:    #F7F4F0;
+      --bg-deep:    #1E1E1E;
+      --text:       #2D2D2D;
+      --text-mid:   #666666;
+      --text-light: #AAAAAA;
+      --border:     #E0DDD9;
+      --ph-bg:      #EAE5DE;
+      --ph-text:    #C2BCB5;
+      --accent:     #3B5E4E;
+      --serif:      'Noto Serif JP', Georgia, serif;
+      --sans:       'Noto Sans JP', sans-serif;
+      --col:        660px;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.9;
+      letter-spacing: 0.03em;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── 汎用画像ユーティリティ ── */
+    img { display: block; }
+
+    /* プレースホルダー（実素材のない箇所） */
+    .img-ph {
+      width: 100%;
+      background: var(--ph-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .img-ph span {
+      font-size: 0.65rem;
+      color: var(--ph-text);
+      text-align: center;
+      line-height: 1.9;
+    }
+
+    /* キャプション */
+    .img-caption {
+      font-size: 0.68rem;
+      color: var(--text-light);
+      text-align: center;
+      margin-top: 9px;
+      font-style: italic;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 90vh;
+      min-height: 540px;
+      overflow: hidden;
+    }
+    .hero__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+    }
+    .hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.05) 0%,
+        rgba(0,0,0,0.55) 100%
+      );
+    }
+
+
+    .hero__content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 0 40px 64px;
+      max-width: calc(var(--col) + 80px);
+      margin: 0 auto;
+    }
+    .hero__eyebrow {
+      font-size: 0.58rem;
+      letter-spacing: 0.32em;
+      color: rgba(255,255,255,0.7);
+      display: block;
+      margin-bottom: 14px;
+    }
+    .hero__title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 400;
+      line-height: 1.5;
+      letter-spacing: 0.06em;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .hero__lead {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.12em;
+    }
+
+    /* ── ARTICLE ── */
+    .article {
+      max-width: var(--col);
+      margin: 0 auto;
+      padding: 0 24px 120px;
+    }
+    .article__meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 52px 0 40px;
+    }
+    .article__category {
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 4px 10px;
+    }
+    .article__date {
+      font-size: 0.68rem;
+      color: var(--text-light);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── BODY TEXT ── */
+    .body-text { margin-bottom: 40px; }
+    .body-text p {
+      font-size: 0.93rem;
+      line-height: 2.15;
+      color: var(--text);
+      margin-bottom: 1.5em;
+    }
+    .body-text p:last-child { margin-bottom: 0; }
+
+    /* ── STORY SEPARATOR ── */
+    .story-sep {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin: 72px 0 32px;
+    }
+    .story-sep::before,
+    .story-sep::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .story-num {
+      font-size: 0.58rem;
+      letter-spacing: 0.42em;
+      color: var(--text-light);
+    }
+
+    /* ── STORY TITLE ── */
+    .story-title {
+      font-family: var(--serif);
+      font-size: clamp(1.15rem, 3vw, 1.42rem);
+      font-weight: 400;
+      line-height: 1.78;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
+
+    /* ── PULL QUOTE ── */
+    .pull-quote {
+      border-left: 2px solid #CCCCCC;
+      padding: 2px 0 2px 22px;
+      margin: 36px 0;
+    }
+    .pull-quote p {
+      font-family: var(--serif);
+      font-size: 0.97rem;
+      font-weight: 400;
+      line-height: 1.95;
+      color: var(--text-mid);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── FULL-BLEED ── */
+    .img-fullbleed {
+      position: relative;
+      left: 50%;
+      margin-left: -50vw;
+      width: 100vw;
+      margin-top: 0;
+    }
+    .img-fullbleed img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* ── FLOAT ── */
+    .img-float-right {
+      float: right;
+      width: 44%;
+      margin: 4px 0 24px 36px;
+    }
+    .img-float-left {
+      float: left;
+      width: 44%;
+      margin: 4px 36px 24px 0;
+    }
+    .img-float-right img,
+    .img-float-left img {
+      width: 100%;
+      object-fit: cover;
+    }
+    .clearfix::after { content: ''; display: table; clear: both; }
+
+    /* ── 2-UP ── */
+    .img-duo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 40px 0 0;
+    }
+    .img-duo__item img {
+      width: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .img-duo__item .img-ph { height: 100%; }
+
+    /* ── OFFSET ── */
+    .img-offset-right {
+      position: relative;
+      left: 8%;
+      width: 92%;
+      margin: 40px 0 0;
+    }
+    .img-offset-right img { width: 100%; display: block; }
+
+    /* ── DARK QUOTE ── */
+    .dark-quote {
+      background: var(--bg-deep);
+      color: #fff;
+      position: relative;
+      left: 50%;
+      margin-left: -50vw;
+      width: 100vw;
+      padding: 64px 24px;
+      margin-top: 64px;
+      margin-bottom: 64px;
+      text-align: center;
+    }
+    .dark-quote p {
+      font-family: var(--serif);
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      font-weight: 300;
+      line-height: 1.95;
+      letter-spacing: 0.07em;
+      max-width: 520px;
+      margin: 0 auto;
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* ── WARM SECTION ── */
+    .section-warm {
+      background: var(--bg-warm);
+      position: relative;
+      left: 50%;
+      margin-left: -50vw;
+      width: 100vw;
+      padding: 64px 0;
+      margin-top: 72px;
+      margin-bottom: 72px;
+    }
+    .section-warm__inner {
+      max-width: var(--col);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── INGREDIENT PHOTO GRID ── */
+    .ingredient-photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      margin: 36px 0 6px;
+    }
+    .ingredient-photo-grid__item {
+      position: relative;
+      overflow: hidden;
+    }
+    .ingredient-photo-grid__item img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .ingredient-photo-grid__item:hover img { transform: scale(1.03); }
+    .ingredient-photo-grid__label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.48));
+      color: rgba(255,255,255,0.92);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      padding: 16px 12px 10px;
+      font-family: var(--serif);
+    }
+
+    /* ── INGREDIENT LIST ── */
+    .ingredient-list {
+      border-top: 1px solid var(--border);
+      margin: 28px 0 36px;
+    }
+    .ingredient-item {
+      display: flex;
+      gap: 24px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: baseline;
+    }
+    .ingredient-item__name {
+      font-family: var(--serif);
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: var(--text);
+      min-width: 148px;
+      flex-shrink: 0;
+    }
+    .ingredient-item__desc {
+      font-size: 0.8rem;
+      color: var(--text-mid);
+      line-height: 1.85;
+    }
+
+    /* ── MAKER ── */
+    .maker-block {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 32px;
+      align-items: start;
+      margin-bottom: 32px;
+    }
+    .maker-block__img img,
+    .maker-block__img .img-ph {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+    .maker-block__name {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      margin-bottom: 5px;
+    }
+    .maker-block__title {
+      font-size: 0.7rem;
+      color: var(--text-light);
+      letter-spacing: 0.06em;
+      line-height: 1.8;
+    }
+
+    /* ── PRODUCT CLOSE ── */
+    .product-close {
+      margin-top: 88px;
+      padding-top: 56px;
+      border-top: 1px solid var(--border);
+    }
+    .product-close__eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 0.28em;
+      color: var(--text-light);
+      display: block;
+      text-align: center;
+      margin-bottom: 44px;
+    }
+    .product-close__inner {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+    .product-close__img-wrap {
+      width: 200px;
+      flex-shrink: 0;
+    }
+    .product-close__img-wrap img {
+      width: 100%;
+      display: block;
+    }
+    .product-close__name {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+    .product-close__sub {
+      font-size: 0.7rem;
+      color: var(--text-light);
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+    .product-close__specs-wrap {
+      border-top: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .product-close__body .product-hero__price {
+      margin-top: 4px;
+    }
+    .btn-cta-yellow {
+      display: block;
+      width: 100%;
+      background: #f6d751;
+      color: var(--text);
+      text-align: center;
+      padding: 14px 0;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      box-sizing: border-box;
+    }
+    .btn-cta-yellow:hover { opacity: 0.85; }
+    .btn-link {
+      display: inline-block;
+      font-size: 0.73rem;
+      letter-spacing: 0.18em;
+      color: var(--text);
+      border: 1px solid var(--text);
+      padding: 12px 28px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-link:hover { background: var(--text); color: #fff; }
+
+    /* ── PRODUCT HERO ── */
+    .product-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "img body"
+        "detail detail";
+      column-gap: 48px;
+      row-gap: 36px;
+      padding: 40px 0 72px;
+      margin-bottom: 72px;
+    }
+    .product-hero__img { grid-area: img; }
+    .product-hero__img img { width: 100%; display: block; }
+    .product-hero__body { grid-area: body; }
+    .product-hero__detail { grid-area: detail; }
+    .product-hero__brand {
+      font-size: 0.58rem;
+      letter-spacing: 0.28em;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+    .product-hero__name {
+      font-family: var(--serif);
+      font-size: clamp(1.3rem, 3vw, 1.75rem);
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+    .product-hero__tagline {
+      font-size: 0.66rem;
+      color: var(--text-mid);
+      letter-spacing: 0.1em;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .product-hero__price { margin-bottom: 16px; }
+    .product-hero__price-orig {
+      font-size: 0.73rem;
+      color: var(--text-light);
+      text-decoration: line-through;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .product-hero__price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .product-hero__price-num {
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      letter-spacing: 0.04em;
+    }
+    .product-hero__price-tax {
+      font-size: 0.65rem;
+      color: var(--text-mid);
+    }
+    .product-hero__badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .product-hero__badge {
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 4px 9px;
+    }
+    .product-hero__desc {
+      font-size: 0.84rem;
+      line-height: 2.05;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+    .product-hero__specs {
+      border-top: 1px solid var(--border);
+    }
+    .specs-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      border-bottom: 1px solid var(--border);
+      margin: 0;
+      padding: 0;
+    }
+    .specs-dt,
+    .specs-dd {
+      display: block;
+      margin: 0;
+      padding: 10px 0;
+      font-size: 0.75rem;
+      line-height: 1.6;
+    }
+    .specs-dt {
+      color: var(--text-light);
+      padding-right: 20px;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      display: block;
+      width: 100%;
+      background: #f6d751;
+      color: var(--text);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      padding: 17px 0;
+      text-align: center;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.7; }
+    .product-hero__deadline {
+      font-size: 0.68rem;
+      color: var(--text-light);
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+    .product-hero__stripe-note {
+      margin-top: 8px;
+      font-size: 0.62rem;
+      color: var(--text-light);
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+
+    /* ── STICKY CTA ── */
+    .sticky-cta {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      padding: 14px 32px 16px;
+      background: rgba(30,30,30,0.97);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+      z-index: 100;
+    }
+    .sticky-cta.show { transform: translateY(0); }
+    .sticky-cta__text {
+      font-family: var(--serif);
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+    .sticky-cta__btn {
+      display: inline-block;
+      background: #f6d751;
+      color: var(--text);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      padding: 11px 28px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+    .sticky-cta__btn:hover { opacity: 0.8; }
+    @media (max-width: 640px) {
+      .sticky-cta { padding: 12px 16px 14px; gap: 10px; }
+      .sticky-cta__text { font-size: 0.7rem; }
+      .sticky-cta__btn { padding: 10px 18px; font-size: 0.68rem; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 36px;
+      text-align: center;
+      font-size: 0.68rem;
+      color: var(--text-light);
+      letter-spacing: 0.14em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .site-header { padding: 14px 20px; }
+      .site-header__logo { height: 28px; }
+      .article { padding: 0 16px 80px; }
+      .hero__content { padding: 0 20px 48px; }
+      .hero__title { font-size: 1.7rem; }
+      .product-hero {
+        grid-template-columns: 1fr;
+        grid-template-areas: "img" "body" "detail";
+        column-gap: 0;
+        row-gap: 24px;
+      }
+      .product-hero__img { position: static; }
+      .img-float-right, .img-float-left { float: none; width: 100%; margin: 24px 0 8px; }
+      .img-duo { grid-template-columns: 1fr; }
+      .img-offset-right { left: 0; width: 100%; }
+      .maker-block { grid-template-columns: 1fr; }
+      .product-close__inner { flex-direction: column; }
+      .product-close__img-wrap { width: 100%; max-width: 220px; }
+      .ingredient-item { flex-direction: column; gap: 4px; }
+      .ingredient-item__name { min-width: unset; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="heroSection">
+  <img src="https://baseec-img-mng.akamaized.net/images/shop_front/theginger-theshop-jp/bb971404ca4c94e72ce281ed664b01c9.png" alt="THE GINGER" class="hero__img" loading="eager">
+  <div class="hero__overlay"></div>
+
+  <div class="hero__content">
+    <h1 class="hero__title">身体の芯から、<br>静かにあたたまる。</h1>
+    <p class="hero__lead">国産生姜のライフスタイルケアティー — THE GINGER</p>
+  </div>
+</section>
+
+
+<!-- ═══ ARTICLE ═══ -->
+<main>
+<article class="article">
+
+  <!-- Opening: 商品ヒーロー（画像 + 情報 + CTA） -->
+  <div class="product-hero">
+
+    <div class="product-hero__img">
+      <img src="assets/product-glass.png" alt="THE GINGER">
+    </div>
+
+    <div class="product-hero__body">
+      <p class="product-hero__brand">my herb</p>
+      <h2 class="product-hero__name">THE GINGER</h2>
+      <p class="product-hero__tagline">GINGER TEA クロモジと小豆 ティーバッグ15個入り</p>
+      <div class="product-hero__price">
+        <span class="product-hero__price-orig">¥2,800</span>
+        <div class="product-hero__price-row">
+          <span class="product-hero__price-num">¥2,240</span>
+          <span class="product-hero__price-tax">税込</span>
+        </div>
+      </div>
+      <div class="product-hero__badges">
+        <span class="product-hero__badge">先行予約 20%OFF</span>
+        <span class="product-hero__badge">全国送料無料</span>
+      </div>
+      <p class="product-hero__deadline">受付期間：〜5月31日</p>
+      <a href="https://buy.stripe.com/bJecN63wQ0iz93lenZcV201" class="btn-primary" target="_blank" rel="noopener">先行予約する →</a>
+      <p class="product-hero__stripe-note">Stripeの決済ページに移動します</p>
+      <p class="product-hero__stripe-note">※ 沖縄・離島は送料別途</p>
+    </div>
+
+    <div class="product-hero__detail">
+      <p class="product-hero__desc">有機生姜・クロモジ・棗・小豆をブレンドしたノンカフェインのハーブティー。香料・甘味料・保存料は一切不使用。クロモジの清々しい香りとともに、小豆のやさしい香ばしさと甘さ、そして最後に生姜の心地よい辛みを愉しめます。</p>
+      <div class="product-hero__specs">
+        <div class="specs-row"><span class="specs-dt">内容量</span><span class="specs-dd">45g（ティーバッグ 3g × 15個）</span></div>
+        <div class="specs-row"><span class="specs-dt">原材料</span><span class="specs-dd">有機生姜・有機小豆・棗・黒文字（すべて国産）</span></div>
+        <div class="specs-row"><span class="specs-dt">カフェイン</span><span class="specs-dd">ノンカフェイン / 添加物不使用</span></div>
+        <div class="specs-row"><span class="specs-dt">保存方法</span><span class="specs-dd">直射日光・高温多湿を避け涼しい場所で保管</span></div>
+        <div class="specs-row"><span class="specs-dt">お届け</span><span class="specs-dd">2026年7月お届け予定</span></div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ─── DARK QUOTE ─── -->
+  <div class="dark-quote">
+    <p>「心と身体をあたためる、<br>静かな贅沢。」</p>
+  </div>
+
+  <!-- ─── STORY 01 ─── -->
+  <div class="story-sep"><span class="story-num">01</span></div>
+  <h2 class="story-title">体温を1℃あげる暮らし。</h2>
+
+  <div class="body-text clearfix">
+    <div class="img-float-right">
+      <img src="https://baseec-img-mng.akamaized.net/apps/item_layout/images/origin/144372874/img_4a600bebaa4842add6cbda1c0d25b94d.png" alt="温かいお茶を飲む女性" style="width:100%; aspect-ratio:4/5; object-fit:cover; object-position:center;" loading="lazy">
+    </div>
+    <p>免疫細胞が正常に働く体温は、36.5℃とされています。</p>
+    <p>体温が下がると血管が収縮し、血液の流れが滞ります。血液中の白血球が全身を巡れなくなり、体が持つ本来の力が発揮されにくくなる。体温の低下は基礎代謝の低下にもつながり、熱をつくる力そのものが落ちていきます。</p>
+    <p>体温を維持するために、もっとも大切な器官は「筋肉」です。人体の熱の多くは筋肉によってつくられます。だから、体を動かす習慣が体温の底上げに直結します。</p>
+    <p>食事も重要です。たんぱく質は熱産生に不可欠な栄養素。根菜・発酵食品・温かい飲み物を取り入れることも、日々の体温を支えます。生姜は古くから血流を促し代謝を上げる食材として、世界中の食文化に根づいてきました。</p>
+    <p>体を温めるということは、特別なことをすることではありません。食事・運動・入浴・睡眠という基本的な習慣を、少しずつ丁寧に整えていくこと。その積み重ねが、体温という土台をつくります。</p>
+  </div>
+
+
+  <!-- ─── STORY 02 ─── -->
+  <div class="section-warm">
+    <div class="section-warm__inner">
+      <div class="story-sep" style="margin-top:0;"><span class="story-num">02</span></div>
+      <h2 class="story-title">何千年もの間、<br>世界中の人が生姜を飲んできた。</h2>
+
+      <div class="body-text clearfix">
+        <div class="img-float-left">
+          <img src="https://baseec-img-mng.akamaized.net/images/shop_front/theginger-theshop-jp/775765e3c72f5e1eda3b3fa8b48e356c.png" alt="収穫したての生姜" style="aspect-ratio:1; object-fit:cover; object-position:center;" loading="lazy">
+        </div>
+        <p>中国では漢方素材として。西洋ではハーブとして。日本では生姜湯として。時代や国を越えて、人々のライフスタイルケアとして愛されてきたのが"生姜"です。</p>
+        <p>古代インドのアーユルヴェーダでは「すべての病に効く薬」として記され、中国の漢方では紀元前から体を温める生薬として処方されてきました。中世ヨーロッパでは香辛料として珍重され、嵐の航海中に船員が生姜を口にしたという記録も残っています。</p>
+        <p>日本でも風邪をひいたとき、体の冷えを感じたとき、古くから「生姜湯」が家庭の知恵として受け継がれてきました。</p>
+      </div>
+
+      <div class="pull-quote">
+        <p>「風邪をひいたら生姜湯」と、祖母から教わった。それは、何千年もかけて積み上げられてきた、暮らしの知恵だった。</p>
+      </div>
+
+      <div class="body-text">
+        <p>THE GINGERでは、主役となる生姜に国産素材を使用。全国の乾燥生姜を飲み比べ、香りや辛みのバランスを見ながら厳選しました。</p>
+      </div>
+
+      <!-- コンテンツ幅: 様々な加工生姜 -->
+      <div style="margin: 40px 0 0;">
+        <img src="https://baseec-img-mng.akamaized.net/images/shop_front/theginger-theshop-jp/b651ec4bc4305ad9107d4e1bbe59f4cc.png" alt="様々な形の生姜" style="width:100%; display:block;" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── STORY 03 ─── -->
+  <div class="story-sep"><span class="story-num">03</span></div>
+  <h2 class="story-title">千利休とシャネルが愛した、<br>香りの正体。</h2>
+
+  <div class="body-text">
+    <p>千利休は、庭に自生するクロモジの枝を自ら小刀で削り、和菓子に添えて客人に振る舞いました。茶事を終えた客は、その楊枝一本を懐にしまって持ち帰ったといいます。一期一会の証として。</p>
+    <p>クロモジは日本の山野に自生するクスノキ科の木です。枝を折ると立ち上がる清々しい香りは、古くから高級料亭や茶道の世界で大切にされてきました。</p>
+  </div>
+
+  <!-- 2-up: クロモジ枝葉 + 和菓子＋楊枝 -->
+  <div class="img-duo">
+    <div class="img-duo__item">
+      <img src="https://baseec-img-mng.akamaized.net/apps/item_layout/images/origin/144372874/img_01b2127acad3cd32137ae1eb863d9a99.png" alt="山野に自生するクロモジ" style="aspect-ratio:1; object-fit:cover; object-position:center;" loading="lazy">
+    </div>
+    <div class="img-duo__item">
+      <img src="https://baseec-img-mng.akamaized.net/apps/item_layout/images/origin/144372874/img_61801b3e31bd4def3425d9a6e0973f48.png" alt="和菓子と黒文字楊枝" style="aspect-ratio:1; object-fit:cover; object-position:center;" loading="lazy">
+    </div>
+  </div>
+  <div style="margin-bottom:44px;"></div>
+
+  <div class="body-text">
+    <p>このクロモジの主成分が「リナロール」という香り成分です。フローラルで落ち着きのある香りを持つリナロールは、世界的に名高いある香水にも使われていた成分でもあります。シャネルNo.5がかつて使用したローズウッドもリナロールを主成分とし、クロモジとは成分の波形が酷似しているとされています。</p>
+  </div>
+
+  <div class="pull-quote">
+    <p>日本の山に自生するこの木が、茶道の美意識と世界最高峰の香水を、ひそかに結んでいた。</p>
+  </div>
+
+
+
+  <!-- ─── STORY 04（ウォームセクション） ─── -->
+  <div class="section-warm">
+    <div class="section-warm__inner">
+      <div class="story-sep" style="margin-top:0;"><span class="story-num">04</span></div>
+      <h2 class="story-title">4つの素材、<br>それぞれに千年の理由がある。</h2>
+
+      <div class="body-text">
+        <p>漢方とは、自然の素材の力を組み合わせ、体全体のバランスを整える東洋医学の考え方です。単一の症状に作用するのではなく、体の根本から状態を整えることを目的とし、何千年にもわたって人々の生活に寄り添ってきました。</p>
+        <p>THE GINGERを構成する4つの素材は、いずれも漢方において重要な位置を占める生薬です。</p>
+      </div>
+
+      <!-- 4素材フォトグリッド -->
+      <div class="ingredient-photo-grid">
+        <div class="ingredient-photo-grid__item">
+          <img src="assets/ginger.jpg" alt="生姜" loading="lazy">
+          <span class="ingredient-photo-grid__label">生姜（姜）</span>
+        </div>
+        <div class="ingredient-photo-grid__item">
+          <img src="assets/kuromoji.png" alt="クロモジ" loading="lazy">
+          <span class="ingredient-photo-grid__label">クロモジ（烏樟）</span>
+        </div>
+        <div class="ingredient-photo-grid__item">
+          <img src="assets/natsume.jpg" alt="棗" loading="lazy">
+          <span class="ingredient-photo-grid__label">棗（大棗）</span>
+        </div>
+        <div class="ingredient-photo-grid__item">
+          <img src="assets/azuki.jpg" alt="小豆" loading="lazy">
+          <span class="ingredient-photo-grid__label">小豆（赤小豆）</span>
+        </div>
+      </div>
+
+      <div class="ingredient-list">
+        <div class="ingredient-item">
+          <span class="ingredient-item__name">生姜（姜）</span>
+          <span class="ingredient-item__desc">漢方の基本薬のひとつ。体を温め、気の巡りを助けるとされる。</span>
+        </div>
+        <div class="ingredient-item">
+          <span class="ingredient-item__name">クロモジ（烏樟）</span>
+          <span class="ingredient-item__desc">気を巡らせ、香りで心を整えるとされる日本固有の和ハーブ。</span>
+        </div>
+        <div class="ingredient-item">
+          <span class="ingredient-item__name">棗（大棗）</span>
+          <span class="ingredient-item__desc">滋養を補い、他の生薬の働きを穏やかに調和させる役割を持つ。</span>
+        </div>
+        <div class="ingredient-item">
+          <span class="ingredient-item__name">小豆（赤小豆）</span>
+          <span class="ingredient-item__desc">体の余分な水分を流し、むくみを和らげるとされる。生姜の辛みを穏やかに包む甘みも持つ。</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ─── STORY 05 ─── -->
+  <div class="story-sep"><span class="story-num">05</span></div>
+  <h2 class="story-title">眠りと、体温の話。</h2>
+
+  <div class="body-text clearfix">
+    <div class="img-float-left">
+      <img src="https://baseec-img-mng.akamaized.net/images/shop_front/theginger-theshop-jp/c33124bf8e6031ba81ef0deccf0e28ad.png" alt="生姜ティーとはちみつ" style="width:100%; aspect-ratio:3/4; object-fit:cover; object-position:72% center;" loading="lazy">
+    </div>
+    <p>人が眠りに入るとき、体の中では深部体温が下がっています。</p>
+    <p>手足の皮膚から熱を放散することで、体の内側の温度——深部体温——を下げる。その温度差が生じたとき、自然な眠気が訪れます。体を温めることが眠りに良いとされるのは、この「温める→放熱→深部体温の低下」というサイクルがあるためです。</p>
+    <p>ところがカフェインは、この流れを妨げます。脳内には「アデノシン」という眠気を促す物質があります。カフェインはそのアデノシンの働きを阻害し、眠気を抑制します。コーヒー1杯のカフェインは、摂取から約9時間後の睡眠にも影響するというデータがあります。</p>
+    <p>THE GINGERはノンカフェインです。就寝前に飲んでも、眠りのサイクルを妨げません。温かい一杯が体を温め、その熱が放散され、深部体温が下がっていく。そのまま眠りに入れる飲み物として、夜の時間に選んでもらえたらと思っています。</p>
+  </div>
+
+  <!-- Offset image -->
+  <div class="img-offset-right">
+    <img src="assets/sleep-tea.jpg" alt="夜の静かなひとり時間、リネンの上の茶器と本" style="display:block; width:100%; aspect-ratio:4/3; object-fit:cover; object-position:center center;" loading="lazy">
+  </div>
+
+
+  <!-- ─── STORY 06 ─── -->
+  <div class="section-warm">
+    <div class="section-warm__inner">
+      <div class="story-sep" style="margin-top:0;"><span class="story-num">06</span></div>
+      <h2 class="story-title">ハーブティーのOEM専門家が、<br>自分のために作りました。</h2>
+
+      <div class="maker-block">
+        <div class="maker-block__img">
+          <img src="assets/maker-portrait.png" alt="逸見 伶" style="object-position: left top;">
+        </div>
+        <div>
+          <p class="maker-block__name">逸見 伶</p>
+          <p class="maker-block__title">ティーウェリスト<br>ハーブティーOEM専門家<br>my herb 代表</p>
+        </div>
+      </div>
+
+      <div class="body-text">
+        <p>［作り手のストーリーはヒアリング後に追記予定。なぜTHE GINGERを作ったか、OEM専門家として商品を作り続けてきた中で自分のブランドを立ち上げた経緯など。本人の言葉で。］</p>
+        <p>ティーウェリストとして、またハーブティーのOEM製造を手がける専門家として、何百ものブレンドを試してきた中で生まれたのがTHE GINGERです。クライアントの商品を作り続ける中で、自分自身が毎日飲みたいと思えるお茶を、自分の手で作りたいと思いました。</p>
+      </div>
+
+      <div style="margin: 32px 0 0;">
+        <img src="assets/tasting.png" alt="飲み比べの様子" style="width:100%; display:block;" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PRODUCT CLOSE ═══ -->
+  <div class="product-close">
+    <span class="product-close__eyebrow">— この記事でご紹介した商品 —</span>
+    <div class="product-close__inner">
+      <div class="product-close__img-wrap">
+        <img src="assets/product-glass.png" alt="THE GINGER" loading="lazy">
+      </div>
+      <div class="product-close__body">
+        <p class="product-close__name">THE GINGER</p>
+        <p class="product-close__sub">GINGER TEA クロモジと小豆 ティーバッグ15個入り</p>
+        <div class="product-close__specs-wrap">
+          <div class="specs-row"><span class="specs-dt">内容量</span><span class="specs-dd">45g（ティーバッグ 3g × 15個）</span></div>
+          <div class="specs-row"><span class="specs-dt">原材料</span><span class="specs-dd">有機生姜・有機小豆・棗・黒文字（すべて国産）</span></div>
+          <div class="specs-row"><span class="specs-dt">カフェイン</span><span class="specs-dd">ノンカフェイン / 添加物不使用</span></div>
+          <div class="specs-row"><span class="specs-dt">保存方法</span><span class="specs-dd">直射日光・高温多湿を避け涼しい場所で保管</span></div>
+          <div class="specs-row"><span class="specs-dt">お届け</span><span class="specs-dd">2026年7月お届け予定</span></div>
+        </div>
+        <div class="product-hero__price">
+          <span class="product-hero__price-orig">¥2,800</span>
+          <div class="product-hero__price-row">
+            <span class="product-hero__price-num">¥2,240</span>
+            <span class="product-hero__price-tax">税込</span>
+          </div>
+        </div>
+        <div class="product-hero__badges" style="margin-bottom:20px;">
+          <span class="product-hero__badge">先行予約 20%OFF</span>
+          <span class="product-hero__badge">全国送料無料</span>
+        </div>
+        <p class="product-hero__deadline">受付期間：〜5月31日</p>
+        <a href="https://buy.stripe.com/bJecN63wQ0iz93lenZcV201" class="btn-cta-yellow" target="_blank" rel="noopener">先行予約する →</a>
+        <p class="product-hero__stripe-note">Stripeの決済ページに移動します</p>
+      <p class="product-hero__stripe-note">※ 沖縄・離島は送料別途</p>
+      </div>
+    </div>
+  </div>
+
+</article>
+</main>
+
+<footer>
+  <p>© THE GINGER / my herb</p>
+</footer>
+
+<!-- 追従CTA -->
+<div class="sticky-cta" id="stickyBar">
+  <span class="sticky-cta__text">受付は5月31日まで ─ 20%OFF &amp; 送料無料</span>
+  <a href="https://buy.stripe.com/bJecN63wQ0iz93lenZcV201" class="sticky-cta__btn" target="_blank" rel="noopener">今すぐ予約する</a>
+</div>
+
+<script>
+(function(){
+  var bar  = document.getElementById('stickyBar');
+  var hero = document.getElementById('heroSection');
+  if (!bar || !hero) return;
+  var io = new IntersectionObserver(function(entries){
+    bar.classList.toggle('show', !entries[0].isIntersecting);
+  }, { threshold: 0 });
+  io.observe(hero);
+})();
+</script>
+
+</body>
+</html>
